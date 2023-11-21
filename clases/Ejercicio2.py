@@ -52,7 +52,7 @@ class Motocicleta(Bicicleta):
                 f'Velocidad maxima {self.velocidad} km/h\n'\
                 f'Cilindrada {self.cilindrada} cc\n'\
 
-
+############ MAiN #################
 
 def catalogar(lista):
     print("Lista de vehiculos\n")
