@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>INFORMATORIO</title>
+</head>
+<body>
+	<h1>MENU</h1>
+	<ul>
+		<li><a href="{% url 'inicio' %}">Home</a></li>
+		<li><a href="{% url 'contacto' %}">Contacto</a>
+		</li>
+		<li><a href="">Nostros</a></li>
+	</ul>
+
+	{% block contenido %}
+
+	{% endblock contenido %}
+
+</body>
+</html>
