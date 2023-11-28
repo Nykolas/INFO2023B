@@ -3,4 +3,13 @@
 
 {% block contenido %}
 	<h1>SOY HOME DE NOTICIAS</h1>
+
+	{{fecha}}
+
+	{% for n in noticias %}
+		<div>
+			<p><strong>TITULO:</strong>{{n.titulo}}</p>
+			<p><strong>CONTENIDO:</strong>{{n.contenido}}</p>
+		</div><hr><hr>
+	{% endfor %}
 {% endblock contenido %}
