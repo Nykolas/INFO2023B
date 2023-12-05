@@ -22,6 +22,7 @@
 			<a href="{% url 'logout'%}">LOGOUT</a>
 		{% else %}
 			<a href="{% url 'login'%}">LOGIN</a>
+			<a href="{% url 'usuarios:registro_usuario' %}">Registrarme</a>
 		{% endif %}
 		<br><br><br><br>
 	{% block contenido %}
