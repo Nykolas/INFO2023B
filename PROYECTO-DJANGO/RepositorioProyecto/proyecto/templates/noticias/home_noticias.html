@@ -2,20 +2,38 @@
 
 
 {% block contenido %}
+<div class="container">
+	<div class="text-center">
 	<h1>SOY HOME DE NOTICIAS</h1>
-
-	{{fecha}}
-
-	{% for n in noticias %}
-		<div>
-			<p><strong>TITULO:</strong>{{n.titulo}}</p>
-			<p><strong>CONTENIDO:</strong>{{n.contenido}}</p>
-			<a href="{% url 'noticias:detalle_noticia' n.pk %}">
-			<p><img src="{{n.imagen.url}}" width="150px"></p>
-			</a>
-			<a href="{% url 'noticias:detalle_noticia' n.pk %}">Ver mas</a>
-			<a href="{% url 'noticias:modificar_noticia' n.pk %}">Modificar</a>
-			<a href="{% url 'noticias:borrar_noticia' n.pk %}">Borrar</a>
-		</div><hr><hr>
-	{% endfor %}
+	</div>
+	<div class="row" style="padding-top: 100px;">
+	<div class="col-md-4">
+		<ul>
+				<li><a href="?categoria=0">TODAS</a></li>
+			{% for c in categorias %}
+				<li><a href="?categoria={{c.id}}">{{c.nombre}}</a></li>
+			{% endfor %}
+		</ul>
+	</div>
+	<div class="col-md-4">
+		{% for n in noticias %}
+			<div>
+				<p><strong>TITULO:</strong>{{n.titulo}}</p>
+				<p><strong>CONTENIDO:</strong>{{n.contenido}}</p>
+				<p><strong>CATEGORIA: </strong>{{n.categoria}}</p>
+				<a href="{% url 'noticias:detalle_noticia' n.pk %}">
+				<p><img src="{{n.imagen.url}}" width="150px"></p>
+				</a>
+				<a href="{% url 'noticias:detalle_noticia' n.pk %}">Ver mas</a>
+				<a href="{% url 'noticias:modificar_noticia' n.pk %}">Modificar</a>
+				<a href="{% url 'noticias:borrar_noticia' n.pk %}">Borrar</a>
+			</div><hr><hr>
+		{% endfor %}	
+	</div>
+	<div class="col-md-4">
+	</div>
+	</div>
+		
+	
+</div>
 {% endblock contenido %}
