@@ -22,14 +22,21 @@ def Home_Noticias(request):
 	cat = Categoria.objects.all()
 	contexto['categorias'] = cat
 
+	#CAPTURAR FILTROS 
 	filtro = request.GET.get('categoria',None)
+	orden = request.GET.get('orden',None)
+
 	if not filtro or filtro == '0':
 		todas = Noticia.objects.all()
 	else:
 		categoria_seleccionada = Categoria.objects.get(pk = filtro)
 		todas = Noticia.objects.filter(categoria = categoria_seleccionada)
 
-	
+	if orden=="asc":
+		todas = todas.order_by('creado')
+	elif orden == 'dsc':
+		todas = todas.order_by('-creado')
+
 	contexto['noticias'] = todas
 	return render(request, 'noticias/home_noticias.html', contexto)
 
