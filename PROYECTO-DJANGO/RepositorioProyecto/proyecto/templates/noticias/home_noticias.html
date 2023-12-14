@@ -10,16 +10,30 @@
 	<div class="col-md-4">
 		FILTRAR POR CATEGORIA
 		<ul>
+			{% if "?" in request.get_full_path %}
+				<li><a href="{{ request.get_full_path }}&categoria=0">TODAS</a></li>
+				{% for c in categorias %}
+					<li><a href="{{ request.get_full_path }}&categoria={{c.id}}">{{c.nombre}}</a></li>
+				{% endfor %}
+			{% else %}
 				<li><a href="?categoria=0">TODAS</a></li>
-			{% for c in categorias %}
-				<li><a href="?categoria={{c.id}}">{{c.nombre}}</a></li>
-			{% endfor %}
+				{% for c in categorias %}
+					<li><a href="?categoria={{c.id}}">{{c.nombre}}</a></li>
+				{% endfor %}
+			{% endif %}
 		</ul>
 
 		ORDENAR
 		<ul>
-			<li><a href="?orden=asc">ASC</a></li>
-			<li><a href="?orden=dsc">DSC</a></li>
+			{% if "?" in request.get_full_path %}
+				<li><a href="{{ request.get_full_path }}&orden=asc">ASC</a></li>
+				<li><a href="{{ request.get_full_path }}&orden=dsc">DSC</a></li>
+			{% else %}
+				<li><a href="?orden=asc">ASC</a></li>
+				<li><a href="?orden=dsc">DSC</a></li>
+			{% endif %}
+			
+			
 		</ul>
 	</div>
 	<div class="col-md-4">
@@ -29,12 +43,15 @@
 				<p><strong>CONTENIDO:</strong>{{n.contenido}}</p>
 				<p><strong>CATEGORIA: </strong>{{n.categoria}}</p>
 				<p><strong>FECHA: </strong>{{n.creado}}</p>
+				<p><strong>CREADO POR: {{n.usuario}}</strong></p>
 				<a href="{% url 'noticias:detalle_noticia' n.pk %}">
 				<p><img src="{{n.imagen.url}}" width="150px"></p>
 				</a>
 				<a href="{% url 'noticias:detalle_noticia' n.pk %}">Ver mas</a>
+				{% if request.user == n.usuario or request.user.is_staff %}
 				<a href="{% url 'noticias:modificar_noticia' n.pk %}">Modificar</a>
 				<a href="{% url 'noticias:borrar_noticia' n.pk %}">Borrar</a>
+				{% endif %}
 			</div><hr><hr>
 		{% endfor %}	
 	</div>

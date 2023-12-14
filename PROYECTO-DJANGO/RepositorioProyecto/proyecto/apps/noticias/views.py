@@ -5,6 +5,8 @@ from django.urls import reverse_lazy
 from .models import Noticia, Categoria
 from .forms import Formulario_Noticia, Formulario_Modificar_Noticia
 
+from apps.comentarios.models import Comentario
+
 #CONTROLA SI EL USUARIO ESTA LOGEADO EN UNA VISTA BASADA EN CLASES
 from django.contrib.auth.mixins import LoginRequiredMixin
 #CONTROLA SI EL USUARIO ESTA LOGEADO EN UNA VISTA BASADA EN FUNCIONEs
@@ -62,6 +64,11 @@ class Cargar_noticia(CreateView):
 	template_name = 'noticias/cargar_noticia.html'
 	form_class = Formulario_Noticia
 	success_url = reverse_lazy('noticias:h_noticias')
+	
+	def form_valid(self, form):
+		noticia = form.save(commit=False)
+		noticia.usuario = self.request.user
+		return super(Cargar_noticia, self).form_valid(form)
 
 class Modificar_noticia(UpdateView):
 	model = Noticia
@@ -90,4 +97,7 @@ def Detalle_noticia(request, pk):
 	ctx = {}
 	n = Noticia.objects.get(pk = pk)
 	ctx['noticia'] = n
+
+	com = Comentario.objects.filter(noticia = n)
+	ctx['comentarios'] = com
 	return render(request,'noticias/detalle_noticia.html', ctx)
